@@ -10,6 +10,7 @@ public class TouchLineManager : MonoBehaviour
     private LineRenderer line;
     private CellTypes cellType;
     private HashSet<CellControl> cells = new HashSet<CellControl>();
+    private List<CellControl> cellsOrdered = new List<CellControl>();
 
     // Start is called before the first frame update
     void Start()
@@ -38,11 +39,22 @@ public class TouchLineManager : MonoBehaviour
             }
 
             cells.Add(cell);
+            cellsOrdered.Add(cell);
             line.positionCount = cells.Count + 1;
             line.SetPosition(line.positionCount - 2, cell.transform.position);
             line.SetPosition(line.positionCount - 1, cell.transform.position);
+        }        
+    }
+
+    public void RemovePrevoius(CellControl cell)
+    {
+        if (cell.Equals(cellsOrdered[cellsOrdered.Count - 1]))
+        {
+            cells.Remove(cell);
+            cellsOrdered.Remove(cell);
+            line.positionCount = cells.Count + 1;
+            line.SetPosition(line.positionCount - 1, cellsOrdered[cellsOrdered.Count - 1].transform.position);
         }
-        
     }
 
     public void Add(Vector3 pos)
@@ -54,6 +66,7 @@ public class TouchLineManager : MonoBehaviour
     {
         cellType = CellTypes.none;
         cells.Clear();
+        cellsOrdered.Clear();
         line.positionCount = 1;
     }
 

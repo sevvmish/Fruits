@@ -20,6 +20,7 @@ public class SoundUI : MonoBehaviour
     [SerializeField] private AudioClip Success2;
     [SerializeField] private AudioClip Success3;
     [SerializeField] private AudioClip Cash;
+    [SerializeField] private AudioClip BlowCells;
 
     // Start is called before the first frame update
     void Awake()
@@ -38,6 +39,12 @@ public class SoundUI : MonoBehaviour
 
     public void PlayUISound(SoundsUI _type)
     {
+        PlayUISound(_type, 1f);
+    }
+
+    public void PlayUISound(SoundsUI _type, float volume)
+    {
+        _audio.volume = volume;
         _audio.pitch = 1;
 
         switch (_type)
@@ -126,6 +133,13 @@ public class SoundUI : MonoBehaviour
                 _audio.Play();
                 break;
 
+            case SoundsUI.blow_cells:
+                _audio.Stop();
+                _audio.pitch = 1f;
+                _audio.clip = BlowCells;
+                _audio.Play();
+                break;
+
 
         }
     }
@@ -146,5 +160,6 @@ public enum SoundsUI
     success,
     cash,
     success2,
-    success3
+    success3,
+    blow_cells
 }

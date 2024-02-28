@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
     public UIManager GetUI() => mainUI;
     public AssetManager Assets => assetManager;
     public FieldManager GetFieldManager => fieldManager;
-
+    public Dictionary<CellTypes, int> CurrentProgress { get; private set; }
 
     //GAME START    
     public bool IsGameStarted { get; private set; }
@@ -65,12 +65,28 @@ public class GameManager : MonoBehaviour
         levelManager.SetData();
         inputControl.SetData(_camera);
         cameraControl.SetData(_camera);
+        assetManager.SetData();
         fieldManager.SetData();
+
+        CurrentProgress = new Dictionary<CellTypes, int>();
+        foreach (CellTypes item in Globals.VictoryCondition.Keys)
+        {
+            CurrentProgress.Add(item, 0);
+        }
 
         IsGameStarted = true;
     }
 
-    
+    public bool CountCell(CellControl cell)
+    {
+        if (CurrentProgress.ContainsKey(cell.cellType))
+        {
+            CurrentProgress[cell.cellType]++;
+            return true;
+        }
+
+        return false;
+    }
 
     private void Update()
     {

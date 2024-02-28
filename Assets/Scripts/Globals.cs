@@ -28,6 +28,7 @@ public class Globals : MonoBehaviour
 
     public static Vector2 FieldDimention;
     public static Dictionary<Vector2, CellControl> Cells;
+    public static Dictionary<CellTypes, int> VictoryCondition;
 
-    
+    public const int POOL_LIMIT = 20;
 }

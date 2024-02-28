@@ -19,6 +19,11 @@ public class LevelManager : MonoBehaviour
         {
             case 0:
                 Globals.FieldDimention = new Vector2(7, 10);
+                Globals.VictoryCondition = new Dictionary<CellTypes, int>
+                {
+                    {CellTypes.fruit1, 10 },
+                    {CellTypes.fruit2, 10 }
+                };
                 break;
         }
     }

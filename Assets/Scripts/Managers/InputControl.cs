@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -21,6 +22,7 @@ public class InputControl : MonoBehaviour
     private CellTypes lastCellType;
     private CellControl lastCell;
     private HashSet<CellControl> outlinedCells = new HashSet<CellControl>();
+    private List<CellControl> cells = new List<CellControl>();
 
     public void SetData(Camera c)
     {
@@ -49,14 +51,19 @@ public class InputControl : MonoBehaviour
                         addCell(cell);
                     }
                     else if (lastCell != null 
+                        && lastCell != cell
                         && !outlinedCells.Contains(cell) 
                         && lastCellType == cell.cellType
                         && (lastCell.transform.position - cell.transform.position).magnitude < 1.85f)
                     {
                         addCell(cell);
                     }
+                    else if (outlinedCells.Count > 1 && cells[cells.Count - 2] == cell)
+                    {
+                        removePreviousCell(lastCell);
+                    }
                     
-                    print(cell.gameObject.name);
+                    //print(cell.gameObject.name);
                     
                 }                
                 _cooldown = Time.deltaTime;
@@ -65,27 +72,56 @@ public class InputControl : MonoBehaviour
             {
                 if (outlinedCells.Count > 0)
                 {
-                    touchLine.Add(Input.mousePosition);
+                    //touchLine.Add(Input.mousePosition);
                 }
             }
         }
         else if (!Input.GetMouseButton(0))
         {
-            resetCells();
+            if (outlinedCells.Count >= 3)
+            {
+                fieldManager.UndoCells(outlinedCells.ToArray());
+                resetCells();
+            }
+            else if(outlinedCells.Count >= 1)
+            {
+                SoundUI.Instance.PlayUISound(SoundsUI.error, 0.2f);
+                resetCells();
+            }
+            
         }
     }
 
     private void addCell(CellControl cell)
     {
+        SoundUI.Instance.PlayUISound(SoundsUI.click, 0.3f);
         outlinedCells.Add(cell);
+        cells.Add(cell);
         lastCellType = cell.cellType;
         lastCell = cell;
         touchLine.Add(cell);
+        cell.CLickedEffect(true);
+    }
+
+    private void removePreviousCell(CellControl cell)
+    {
+        SoundUI.Instance.PlayUISound(SoundsUI.pop, 0.2f);
+        outlinedCells.Remove(cell);
+        cells.Remove(cell);
+        cell.CLickedEffect(false);
+        lastCell = cells[cells.Count - 1];
+        touchLine.RemovePrevoius(cell);
     }
 
     private void resetCells()
     {
+        foreach (CellControl item in outlinedCells)
+        {
+            item.CLickedEffect(false);
+        }
+
         outlinedCells.Clear();
+        cells.Clear();
         lastCellType = CellTypes.none;
         lastCell = null;
         touchLine.Reset();
