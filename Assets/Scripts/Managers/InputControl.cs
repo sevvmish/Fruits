@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class InputControl : MonoBehaviour
 {
+    [SerializeField] private TouchLineManager touchLine;
+    [SerializeField] private FieldManager fieldManager;
+
     private Camera _camera;
 
     private Ray ray;
@@ -14,6 +17,10 @@ public class InputControl : MonoBehaviour
     private GameObject lastPlaceForAudioListener;
     private float _cooldown;
     private Vector3 prevPos;
+
+    private CellTypes lastCellType;
+    private CellControl lastCell;
+    private HashSet<CellControl> outlinedCells = new HashSet<CellControl>();
 
     public void SetData(Camera c)
     {
@@ -35,50 +42,53 @@ public class InputControl : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit, cameraRayCast))
             {
-                /*
-                bool isHitPlayer = hit.collider.TryGetComponent(out PlayerControl pc);
-
-                
-                if (hit.collider.CompareTag("Player") && isHitPlayer)
+                if (hit.collider.TryGetComponent(out CellControl cell))
                 {
-                    if (playerUnderControl != null && playerUnderControl.Equals(pc)) return;
-
-                    setAudioListener(pc.gameObject);
-
-                    if (playerUnderControl != null)
+                    if (lastCell == null)
                     {
-                        playerUnderControl.SetOutline(false);
+                        addCell(cell);
                     }
-
-                    playerUnderControl = pc;
-                    playerUnderControl.SetOutline(true);
-                    //gm.GetUI.Lead(playerUnderControl.transform);
-                    //print(hit.collider.gameObject.name);
-                }
-                else if (hit.collider.CompareTag("Ground"))
-                {                    
-                    if (playerUnderControl != null)
+                    else if (lastCell != null 
+                        && !outlinedCells.Contains(cell) 
+                        && lastCellType == cell.cellType
+                        && (lastCell.transform.position - cell.transform.position).magnitude < 1.85f)
                     {
-                        playerUnderControl.OnDestinationPointReached = null;
-                        playerUnderControl.GoToPoint(hit.point);
+                        addCell(cell);
                     }
-
-                    //print(hit.collider.gameObject.name);
-                }
-                else if (hit.collider.CompareTag("Interactable"))
+                    
+                    print(cell.gameObject.name);
+                    
+                }                
+                _cooldown = Time.deltaTime;
+            }
+            else
+            {
+                if (outlinedCells.Count > 0)
                 {
-                    if (playerUnderControl != null)
-                    {
-                        hit.collider.gameObject.GetComponent<Interactable>().Interact
-                            (playerUnderControl);
-                    }
-
-                    print(hit.collider.gameObject.name);
+                    touchLine.Add(Input.mousePosition);
                 }
-
-                _cooldown = 0.1f;*/
             }
         }
+        else if (!Input.GetMouseButton(0))
+        {
+            resetCells();
+        }
+    }
+
+    private void addCell(CellControl cell)
+    {
+        outlinedCells.Add(cell);
+        lastCellType = cell.cellType;
+        lastCell = cell;
+        touchLine.Add(cell);
+    }
+
+    private void resetCells()
+    {
+        outlinedCells.Clear();
+        lastCellType = CellTypes.none;
+        lastCell = null;
+        touchLine.Reset();
     }
 
     private void setAudioListener(GameObject g)

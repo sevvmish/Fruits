@@ -31,7 +31,7 @@ public class MainMenu : MonoBehaviour
     
     private void playWhenInitialized()
     {          
-        YandexGame.StickyAdActivity(!Globals.MainPlayerData.AdvOff);
+        YandexGame.StickyAdActivity(true);
      
         if (Globals.IsMusicOn)
         {

@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using YG;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 [DefaultExecutionOrder(-2)]
 public class GameManager : MonoBehaviour
@@ -13,23 +14,23 @@ public class GameManager : MonoBehaviour
     [Header("Others")]
     [SerializeField] private AssetManager assetManager;
     [SerializeField] private Camera _camera;
-    [SerializeField] private Transform cameraBody;  
-    [SerializeField] private Transform playersLocation;
-    [SerializeField] private Transform vfx;
+    [SerializeField] private Transform cameraBody;    
     [SerializeField] private UIManager mainUI;
     [SerializeField] private OptionsMenu options;
-    [SerializeField] private PhysicMaterial sliderMaterial;
-    
+    [SerializeField] private LevelManager levelManager;
+    [SerializeField] private InputControl inputControl;
+    [SerializeField] private CameraControl cameraControl;
+    [SerializeField] private FieldManager fieldManager;
+
     public Camera GetCamera() => _camera;
     public Transform GetCameraBody() => cameraBody;
     public UIManager GetUI() => mainUI;
     public AssetManager Assets => assetManager;
+    public FieldManager GetFieldManager => fieldManager;
 
 
     //GAME START    
     public bool IsGameStarted { get; private set; }
-
-    private Transform mainPlayer;    
     private float cameraShakeCooldown;
    
 
@@ -50,12 +51,43 @@ public class GameManager : MonoBehaviour
             Instance = this;
         }
 
-        if (Globals.MainPlayerData != null) YandexGame.StickyAdActivity(!Globals.MainPlayerData.AdvOff);
-    
-        
+        //TODEL
+        Globals.MainPlayerData = new PlayerData();
+        Globals.MainPlayerData.Lvl = 0;
+        Globals.IsInitiated = true;
+        Globals.IsMobile = false;
+        Globals.IsSoundOn = true;
+        Globals.IsMusicOn = true;
+        Globals.Language = Localization.GetInstanse(Globals.CurrentLanguage).GetCurrentTranslation();
+
+        if (Globals.MainPlayerData != null) YandexGame.StickyAdActivity(false);
+
+        levelManager.SetData();
+        inputControl.SetData(_camera);
+        cameraControl.SetData(_camera);
+        fieldManager.SetData();
+
+        IsGameStarted = true;
     }
 
-        
+    
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Globals.MainPlayerData = new PlayerData();
+            SaveLoadManager.Save();
+            SceneManager.LoadScene("Gameplay");
+        }
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            YandexGame.StickyAdActivity(false);
+        }
+    }
+
+
     public void ShakeScreen(float _time, float strength, int vibra)
     {
         if (cameraShakeCooldown > 0) return;

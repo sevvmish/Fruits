@@ -30,9 +30,7 @@ public class UIManager : MonoBehaviour
     {
         gm = GameManager.Instance;
 
-        interstitial.OnEnded = null;
-
-        ScreenSaver.Instance.ShowScreen();
+        //ScreenSaver.Instance.ShowScreen();
     }
     
 
