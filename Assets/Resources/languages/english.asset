@@ -1,0 +1,143 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78f9a1b84cd93ba4e81d51bd0cd84ea6, type: 3}
+  m_Name: english
+  m_EditorClassIdentifier: 
+  UpArrowLetter: W
+  DownArrowLetter: S
+  LeftArrowLetter: A
+  RightArrowLetter: D
+  JumpLetter: Jump
+  DoubleJumpHint: Use double jump - press jump, then, while in the air, another jump!
+  CameraHintPC: For camera control and movement direction move your mouse!
+  CameraHintMobile: 'For camera control and movement direction tap on the right part
+    of the screen:'
+  DontForgetDoubleJump: Don't forget to use double jump and move camera!
+  AbilityForPC: Gather special skills and activate it by pressing E or left mouse
+    button!
+  AbilityForMobile: Gather special skills and activate it by pressing right button
+    on the screen!
+  MovementHintLeftJ: 'For movement use left joystick:'
+  MovementHintLetters: 'For movement use buttons:'
+  JumpHintRightJ: 'For jump use right button:'
+  JumpHintKeyboard: 'For jump use space or right mouse button:'
+  CameraScalerInfo: Camera distance
+  Saved: SAVED
+  PlusBonus: Diamond
+  SkipLevelOffer: Skip current level phase
+  SkipLevelConfirmation: Do you want to skip current level phase by watching advertising?
+  PressButtonWhenSkipLevel: Press "1"
+  Play: PLAY
+  Options: Options
+  Continue: CONTINUE
+  Reset: Reset
+  ResetInfoText: You are going to reset all game progress. Continue?
+  ContinueCamelCase: Continue
+  ToMenu: To menu
+  Repeat: Repeat
+  CustomizeButton: Skins
+  ShopButton: Shop
+  ProgressButton: Player progress
+  QuestButton: Daily quests
+  usePutOn: USE
+  useBuy: BUY
+  Aim: Aim
+  Aim_Tutorial: Go through the tutorial
+  Aim_Finish: Reach the finish
+  Aim_DontFall: Don't fall down
+  Aim_Challenge: Finish on time
+  Aim_Laser: Don't get into laser
+  WinText: YOU WIN
+  LoseText: BAD LUCK
+  TutorialDone: Tutorial done!
+  Level1Name: Hard Climb
+  Level2Name: Rotators
+  Level3Name: In The Flow
+  Level3NewLVLName: "\u0421rispy Platforms"
+  Level5Name: Ski Track
+  Level6Name: Sudden Drop
+  Level7Name: Twist And Turn
+  Level8Name: Rays of goodness
+  Level9Name: Easy and fast
+  Level10Name: Torsion
+  Level11Name: Complex platforms
+  Level12Name: Only up
+  Level13Name: Bombs and blasts
+  Take: TAKE
+  DailyRewards: Daily rewards
+  Day: Day
+  Yan: yan
+  Close: CLOSE
+  PurchaseError: An error occurred during the purchasing!
+  NoAdsTitle: No ads!
+  NoAdsMainDescription: Buy full advertising shutdown!
+  NoAdsAddDescription1: Turn off advertising between levels;
+  NoAdsAddDescription2: Turn off advertising banners;
+  AllSkinsTitle: All skins!
+  AllSkinsMainDescription1: Buy all paid skins for player at once!
+  AllSkinsMainDescription2: More than twenty male and female skins!
+  StarterTitle: Starter pack!
+  StarterDescription: Buy currency for fast start in the game!
+  RewardButton: Quests
+  Progress: 'Progress:'
+  Gold: Gold coins
+  Gem: Diamonds
+  XP: Progress points
+  NewLVL: New level!
+  NewMap: New map!
+  LevelShort: lvl.
+  Difficulty: Difficulty
+  New: NEW!
+  PressForAbilityButton: Press E or
+  GoGoGo: Go! Go! Go!
+  Unblock: Unlock!
+  Quest0Name: Invincible
+  Quest0Descr: Reach first the finish line 15 times on "Reach the finish" maps!
+  Quest1Name: Champion
+  Quest1Descr: Win 15 times on "Don't fall down" maps!
+  Quest2Name: Skilled player
+  Quest2Descr: Play thirty times on any maps and in any modes!
+  Quest3Name: The winner
+  Quest3Descr: Reach second or third the finish line 15 times on "Reach the finish"
+    maps!
+  Quest4Name: Victory is close
+  Quest4Descr: Play twenty times on any maps and in any modes!
+  Quest5Name: Almost a master
+  Quest5Descr: Play ten times on "Don't fall down" maps!
+  Quest6Name: Advanced player
+  Quest6Descr: Play ten times on any "Reach the finish" maps!
+  Quest7Name: Good start
+  Quest7Descr: Play ten times on any maps and in any modes!
+  Quest8Name: First progress
+  Quest8Descr: Win three times on "Don't fall down" maps!
+  Quest9Name: First wins
+  Quest9Descr: Reach first the finish line three times on "Reach the finish" maps!
+  GetAllTitle: Get all and now!
+  GetAllMainDescription: Get absolutely all you need for comfort play with only one
+    purchase!
+  GetAllAddDescription1: Advertising turned off completely;
+  GetAllAddDescription2: All game maps are unlocked;
+  GetAllAddDescription3: Gain access to all player skins;
+  AllMapsTitle: All maps!
+  AllMapsMainDescription: Purchase all maps unlock at once!
+  TrackRecord: Track time
+  TrackNewRecord: New track record
+  Sec: sec
+  RewardForAdvGoldDescription: Gain gold coins for watching advertising.
+  RewardForAdvXPDescription: Gain progress points for watching advertising.
+  RewardedADVError: An error occurred while opening advertising!
+  AllMapsRewardSign: All maps are unlocked!
+  AllSkinsRewardSign: All skins are unlocked!
+  NoADVRewardSign: Advertising is disabled!
+  progressHint: Play more, gain progress points and unlock new maps!
+  questHint: Don't forget to take rewards for completing daily quests on time!
+  GOOOOO: GO!
