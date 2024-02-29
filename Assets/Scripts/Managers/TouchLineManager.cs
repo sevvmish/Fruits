@@ -6,6 +6,10 @@ public class TouchLineManager : MonoBehaviour
 {
     [SerializeField] private Material fruit1;
     [SerializeField] private Material fruit2;
+    [SerializeField] private Material fruit3;
+    [SerializeField] private Material fruit4;
+    [SerializeField] private Material fruit5;
+    [SerializeField] private Material fruit6;
 
     private LineRenderer line;
     private CellTypes cellType;
@@ -20,11 +24,11 @@ public class TouchLineManager : MonoBehaviour
 
     public void Add(CellControl cell)
     {
-        if (cells.Count == 0 || (!cells.Contains(cell) && cellType == cell.cellType))
+        if (cells.Count == 0 || (!cells.Contains(cell) && cellType == cell.CellType))
         {
             if (cells.Count == 0)
             {
-                cellType = cell.cellType;
+                cellType = cell.CellType;
 
                 switch (cellType)
                 {
@@ -34,6 +38,22 @@ public class TouchLineManager : MonoBehaviour
 
                     case CellTypes.fruit2:
                         line.material = fruit2;
+                        break;
+
+                    case CellTypes.fruit3:
+                        line.material = fruit3;
+                        break;
+
+                    case CellTypes.fruit4:
+                        line.material = fruit4;
+                        break;
+
+                    case CellTypes.fruit5:
+                        line.material = fruit5;
+                        break;
+
+                    case CellTypes.fruit6:
+                        line.material = fruit6;
                         break;
                 }
             }

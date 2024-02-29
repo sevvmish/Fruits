@@ -7,19 +7,24 @@ using UnityEngine;
 public class FieldManager : MonoBehaviour
 {
     [SerializeField] private Transform GameField;
-    [SerializeField] private GameObject cellExample;
+    //[SerializeField] private GameObject cellExample;
+    [SerializeField] private GameObject backExample;
 
     private AssetManager assets;
     private GameManager gm;
+    private LevelManager levelManager;
     private HashSet<Vector2> cellsToPlay = new HashSet<Vector2>();
     private List<Vector2> respawnCells = new List<Vector2>();
 
     private readonly float cellSpeed = 0.2f;
 
+    
+
     public void SetData()
     {
         gm = GameManager.Instance;
         assets = GameManager.Instance.Assets;
+        this.levelManager = gm.LevelManager;
         Globals.Cells = new Dictionary<Vector2, CellControl> ();
 
         float fromX = Globals.FieldDimention.x / 2f - 0.5f;
@@ -29,13 +34,16 @@ public class FieldManager : MonoBehaviour
         {
             for (float y = -fromY; y <= fromY; y++)
             {
-                CellControl cell = assets.GetCell();
+                CellControl cell = getNewCell();
+                
                 cell.transform.position = new Vector3(x, y, 0);
-                cell.transform.eulerAngles = Vector3.zero;
-                cell.SetData((CellTypes)UnityEngine.Random.Range(1, 7));
-                cell.gameObject.SetActive(true);
+                cell.transform.eulerAngles = Vector3.zero;                
                 Globals.Cells.Add(new Vector2(x, y), cell);
                 cellsToPlay.Add(new Vector2(x, y));
+                GameObject b = Instantiate(backExample, GameField);
+                b.transform.position = new Vector3(x, y, 0.5f);
+                b.transform.localScale = Vector3.one * 0.97f;
+                b.SetActive(true);
 
                 if (y == fromY)
                 {
@@ -52,14 +60,14 @@ public class FieldManager : MonoBehaviour
 
         for (int i = 0; i < cells.Length; i++)
         {
-            if (CellControl.IsCellForResult(cells[i].cellType))
+            if (CellControl.IsCellForResult(cells[i].CellType))
             {
-                _type = cells[i].cellType;
+                _type = cells[i].CellType;
 
                 bool result = gm.CountCell(cells[i]);
                 cells[i].DestroyCell(result);                
             }
-            else if(CellControl.IsCellForAction(cells[i].cellType))
+            else if(CellControl.IsCellForAction(cells[i].CellType))
             {
 
             }            
@@ -128,15 +136,24 @@ public class FieldManager : MonoBehaviour
         {
             if (!Globals.Cells.ContainsKey(respawnCells[i]))
             {
-                CellControl cell = assets.GetCell();
+                CellControl cell = getNewCell();
+                
                 cell.transform.position = new Vector3(respawnCells[i].x, respawnCells[i].y + 1, 0);
                 cell.transform.eulerAngles = Vector3.zero;
-
-                cell.SetData((CellTypes)UnityEngine.Random.Range(1, 7));
-                cell.gameObject.SetActive(true);
+                                
                 cell.transform.DOMove(new Vector3(respawnCells[i].x, respawnCells[i].y, 0), cellSpeed).SetEase(Ease.Linear);
                 Globals.Cells.Add(new Vector2(respawnCells[i].x, respawnCells[i].y), cell);
             }
         }
+    }
+
+    private CellControl getNewCell()
+    {
+        CellTypes _type = levelManager.ApprovedSimpleCells[UnityEngine.Random.Range(0, levelManager.ApprovedSimpleCells.Length)];
+
+        CellControl cell = assets.GetCell();
+        cell.SetData(_type, CellActions.simple);
+        cell.gameObject.SetActive(true);
+        return cell;
     }
 }

@@ -53,7 +53,7 @@ public class InputControl : MonoBehaviour
                     else if (lastCell != null 
                         && lastCell != cell
                         && !outlinedCells.Contains(cell) 
-                        && lastCellType == cell.cellType
+                        && lastCellType == cell.CellType
                         && (lastCell.transform.position - cell.transform.position).magnitude < 1.85f)
                     {
                         addCell(cell);
@@ -97,7 +97,7 @@ public class InputControl : MonoBehaviour
         SoundUI.Instance.PlayUISound(SoundsUI.click, 0.3f);
         outlinedCells.Add(cell);
         cells.Add(cell);
-        lastCellType = cell.cellType;
+        lastCellType = cell.CellType;
         lastCell = cell;
         touchLine.Add(cell);
         cell.CLickedEffect(true);

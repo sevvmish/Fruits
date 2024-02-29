@@ -6,7 +6,8 @@ using UnityEngine;
 
 public class CellControl : MonoBehaviour
 {
-    public CellTypes cellType { get; private set; }
+    public CellTypes CellType { get; private set; }
+    public CellActions CellAction { get; private set; }
 
     [SerializeField] private Transform visual;
     [SerializeField] private GameObject clickVFX;
@@ -21,16 +22,17 @@ public class CellControl : MonoBehaviour
     private static int[] cellsForResults = new int[] { 1, 2, 3, 4, 5, 6 };
     private static int[] cellsForAction = new int[] { 0 };
 
-    public void SetData(CellTypes _type)
+    public void SetData(CellTypes _type, CellActions _action)
     {
         assets = GameManager.Instance.Assets;
         resetAll();
-        cellType = _type;
+        CellType = _type;
+        CellAction = _action;
         visual.localPosition = Vector3.zero;
         visual.localEulerAngles = Vector3.zero;
         visual.localScale = Vector3.one;
 
-        apprearance = GameManager.Instance.Assets.GetFruitByType(cellType);
+        apprearance = GameManager.Instance.Assets.GetFruitByType(CellType);
         apprearance.transform.parent = visual;
         apprearance.transform.localPosition = Vector3.zero;
         apprearance.transform.localEulerAngles = Vector3.zero;
@@ -39,18 +41,18 @@ public class CellControl : MonoBehaviour
 
         Color color = Color.white;
 
-        switch(cellType)
+        switch(CellType)
         {
             case CellTypes.fruit1:
-                color = Color.green;
+                color = new Color(78f/256f, 206f/256f, 81f/256f, 1);
                 break;
 
             case CellTypes.fruit2:
-                color = Color.yellow;
+                color = new Color(236f / 256f, 236f / 256f, 107f / 256f, 1);
                 break;
 
             case CellTypes.fruit3:
-                color = Color.blue;
+                color = new Color(56f / 256f, 140f / 256f, 231f / 256f, 1);
                 break;
 
             case CellTypes.fruit4:
@@ -58,7 +60,7 @@ public class CellControl : MonoBehaviour
                 break;
 
             case CellTypes.fruit5:
-                color = Color.red;
+                color = new Color(197f / 256f, 85f / 256f, 67f / 256f, 1);
                 break;
 
             case CellTypes.fruit6:
@@ -143,7 +145,7 @@ public class CellControl : MonoBehaviour
     }
     private void releaseGameobjects()
     {
-        assets.ReturnFruitByType(cellType, apprearance);
+        assets.ReturnFruitByType(CellType, apprearance);
         assets.ReturnCell(this.gameObject);
     }
 }
@@ -157,4 +159,10 @@ public enum CellTypes
     fruit4,
     fruit5,
     fruit6
+}
+
+public enum CellActions
+{
+    simple,
+    small_explosion
 }
