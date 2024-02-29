@@ -47,14 +47,17 @@ public class FieldManager : MonoBehaviour
 
     public void UndoCells(CellControl[] cells)
     {
-        SoundUI.Instance.PlayUISound(SoundsUI.blow_cells, 0.1f);
+        
+        CellTypes _type = CellTypes.none;
 
         for (int i = 0; i < cells.Length; i++)
         {
             if (CellControl.IsCellForResult(cells[i].cellType))
             {
+                _type = cells[i].cellType;
+
                 bool result = gm.CountCell(cells[i]);
-                cells[i].DestroyCell(result);
+                cells[i].DestroyCell(result);                
             }
             else if(CellControl.IsCellForAction(cells[i].cellType))
             {
@@ -62,7 +65,16 @@ public class FieldManager : MonoBehaviour
             }            
         }
 
-        StartCoroutine(rearrangeCellsDelay(0.3f));
+        if (_type == CellTypes.fruit1 || _type == CellTypes.fruit2 || _type == CellTypes.fruit4)
+        {
+            SoundUI.Instance.PlayUISound(SoundsUI.fruit_blow, 0.3f);
+        }
+        else
+        {
+            SoundUI.Instance.PlayUISound(SoundsUI.berry_blow, 0.3f);
+        }
+
+        StartCoroutine(rearrangeCellsDelay(Globals.SMALL_BLOW_TIME));
     }
     private IEnumerator rearrangeCellsDelay(float sec)
     {

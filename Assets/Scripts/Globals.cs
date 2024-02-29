@@ -31,4 +31,7 @@ public class Globals : MonoBehaviour
     public static Dictionary<CellTypes, int> VictoryCondition;
 
     public const int POOL_LIMIT = 20;
+
+    public const float SMALL_BLOW_TIME = 0.3f;
+    public const float FLY_TO_BONUS_TIME = 0.4f;
 }

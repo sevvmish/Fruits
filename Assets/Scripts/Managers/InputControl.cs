@@ -66,7 +66,7 @@ public class InputControl : MonoBehaviour
                     //print(cell.gameObject.name);
                     
                 }                
-                _cooldown = Time.deltaTime;
+                //_cooldown = Time.deltaTime;
             }
             else
             {

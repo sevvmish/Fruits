@@ -14,6 +14,7 @@ public class AmbientMusic : MonoBehaviour
     [SerializeField] private AudioClip loopMelody3;
     [SerializeField] private AudioClip loopMelody4;
     [SerializeField] private AudioClip loopMelody5;
+    [SerializeField] private AudioClip forestMelody;
 
     // Start is called before the first frame update
     void Awake()
@@ -101,6 +102,15 @@ public class AmbientMusic : MonoBehaviour
                 _audio.Play();
                 break;
 
+            case AmbientMelodies.forest:
+                _audio.Stop();
+                _audio.pitch = 1f;
+                _audio.volume = 0.2f;
+                _audio.loop = true;
+                _audio.clip = forestMelody;
+                _audio.Play();
+                break;
+
 
         }
     }
@@ -157,5 +167,6 @@ public enum AmbientMelodies
     loop_melody2,
     loop_melody3,
     loop_melody4,
-    loop_melody5
+    loop_melody5,
+    forest
 }

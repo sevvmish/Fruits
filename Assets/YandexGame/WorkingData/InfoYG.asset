@@ -12,13 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efa747916aa66674d96ea40ca8a480b2, type: 3}
   m_Name: InfoYG
   m_EditorClassIdentifier: 
-  divAdaptiveBanners:
-    banners: []
-  yandexMusic:
-    nameBanner: 
-    copyLink: 
-  TVSettings:
-    TVTestInEditor: 0
   scopes: 1
   playerPhotoSize: 0
   autoGameReadyAPI: 1
@@ -29,9 +22,9 @@ MonoBehaviour:
     name: Player this
     uniqueID: 000
     photo: https://justplaygames.ru/public/icon_player.png
-  AdWhenLoadingScene: 1
-  showFirstAd: 1
-  rewardedAfterClosing: 1
+  AdWhenLoadingScene: 0
+  showFirstAd: 0
+  rewardedAfterClosing: 0
   adDisplayCalls: 0
   fullscreenAdInterval: 60
   durationOfAdSimulation: 0.5

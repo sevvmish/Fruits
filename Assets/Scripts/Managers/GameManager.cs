@@ -5,6 +5,7 @@ using TMPro;
 using YG;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 [DefaultExecutionOrder(-2)]
 public class GameManager : MonoBehaviour
@@ -37,6 +38,8 @@ public class GameManager : MonoBehaviour
     //TODEL
     [SerializeField] private TextMeshProUGUI testText;
     public TextMeshProUGUI GetTestText() => testText;
+    [SerializeField] private Button testSticky;
+    private bool isSticky;
 
 
     // Start is called before the first frame update
@@ -55,12 +58,25 @@ public class GameManager : MonoBehaviour
         Globals.MainPlayerData = new PlayerData();
         Globals.MainPlayerData.Lvl = 0;
         Globals.IsInitiated = true;
-        Globals.IsMobile = false;
+        Globals.IsMobile = true;
         Globals.IsSoundOn = true;
         Globals.IsMusicOn = true;
         Globals.Language = Localization.GetInstanse(Globals.CurrentLanguage).GetCurrentTranslation();
 
-        if (Globals.MainPlayerData != null) YandexGame.StickyAdActivity(false);
+        if (Globals.IsMobile)
+        {
+            QualitySettings.antiAliasing = 2;
+        }
+        else
+        {
+            QualitySettings.antiAliasing = 4;
+        }
+
+        
+
+        if (Globals.MainPlayerData != null) YandexGame.StickyAdActivity(true);
+        isSticky = true;
+        Globals.MainPlayerData.AdvOff = false;
 
         levelManager.SetData();
         inputControl.SetData(_camera);
@@ -75,6 +91,31 @@ public class GameManager : MonoBehaviour
         }
 
         IsGameStarted = true;
+
+        
+    }
+
+    private void Start()
+    {
+        AmbientMusic.Instance.PlayAmbient(AmbientMelodies.forest);
+
+        testSticky.onClick.AddListener(() =>
+        {
+            if (isSticky)
+            {
+                isSticky = false;
+                YandexGame.StickyAdActivity(false);
+                Globals.MainPlayerData.AdvOff = true;
+                cameraControl.UpdateCamera();
+            }
+            else
+            {
+                isSticky = true;
+                YandexGame.StickyAdActivity(true);
+                Globals.MainPlayerData.AdvOff = false;
+                cameraControl.UpdateCamera();
+            }
+        });
     }
 
     public bool CountCell(CellControl cell)

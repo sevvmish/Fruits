@@ -12,6 +12,7 @@ public class PlayerData
     public int Mus;
 
     public int Lvl;
+    public bool AdvOff;
 
     public PlayerData()
     {        
@@ -21,6 +22,7 @@ public class PlayerData
         Mus = 1; // music
 
         Lvl = 0;
+        AdvOff = false;
 
         Debug.Log("created PlayerData instance");
     }
