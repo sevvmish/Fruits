@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    public CellTypes[] ApprovedSimpleCells { get; private set; }
+    public CellTypes[] ApprovedFruitTypeCells { get; private set; }
+    public Dictionary<CellActions, int> ApprovedCellActions { get; private set; }
 
     private int level;
 
@@ -26,7 +27,14 @@ public class LevelManager : MonoBehaviour
                     {CellTypes.fruit1, 10 },
                     {CellTypes.fruit2, 10 }
                 };
-                ApprovedSimpleCells = approvedSimpleCellsAll();
+                ApprovedFruitTypeCells = approvedSimpleCellsThree1();
+
+                ApprovedCellActions = new Dictionary<CellActions, int> 
+                {
+                    {CellActions.simple, 95 },
+                    {CellActions.small_explosion, 5 }
+                };
+
                 break;
         }
     }
@@ -39,6 +47,34 @@ public class LevelManager : MonoBehaviour
             CellTypes.fruit3, 
             CellTypes.fruit4, 
             CellTypes.fruit5, 
-            CellTypes.fruit6 };
+            CellTypes.fruit6 
+        };
+    }
+
+    private CellTypes[] approvedSimpleCellsThree1()
+    {
+        return new CellTypes[] {
+            CellTypes.fruit1,
+            CellTypes.fruit2,
+            CellTypes.fruit3
+        };
+    }
+
+    private CellTypes[] approvedSimpleCellsThree2()
+    {
+        return new CellTypes[] {
+            CellTypes.fruit1,
+            CellTypes.fruit4,
+            CellTypes.fruit5
+        };
+    }
+
+    private CellTypes[] approvedSimpleCellsThree3()
+    {
+        return new CellTypes[] {
+            CellTypes.fruit1,
+            CellTypes.fruit5,
+            CellTypes.fruit6
+        };
     }
 }

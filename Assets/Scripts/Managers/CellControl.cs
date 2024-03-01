@@ -22,8 +22,11 @@ public class CellControl : MonoBehaviour
     private static int[] cellsForResults = new int[] { 1, 2, 3, 4, 5, 6 };
     private static int[] cellsForAction = new int[] { 0 };
 
+    private bool isDestroing;
+
     public void SetData(CellTypes _type, CellActions _action)
     {
+        isDestroing = false;
         assets = GameManager.Instance.Assets;
         resetAll();
         CellType = _type;
@@ -31,8 +34,8 @@ public class CellControl : MonoBehaviour
         visual.localPosition = Vector3.zero;
         visual.localEulerAngles = Vector3.zero;
         visual.localScale = Vector3.one;
-
-        apprearance = GameManager.Instance.Assets.GetFruitByType(CellType);
+                
+        apprearance = GameManager.Instance.Assets.GetFruitByType(CellType, CellAction);
         apprearance.transform.parent = visual;
         apprearance.transform.localPosition = Vector3.zero;
         apprearance.transform.localEulerAngles = Vector3.zero;
@@ -82,10 +85,19 @@ public class CellControl : MonoBehaviour
         return cellsForAction.Contains((int)_type);
     }
 
-    public void CLickedEffect(bool isCl)
+    public void MakeOneTimeShakeScale(float _time, float _power)
     {
+        if (isClicked) return;
+
+        visual.DOShakeScale(_time, _power, 30).SetEase(Ease.Linear).OnComplete(()=> { visual.localScale = Vector3.one;});
+    }
+    
+    public void CLickedEffect(bool isCl)
+    {        
         if (isCl && !isClicked)
-        {
+        {            
+            visual.DOKill();
+
             isClicked = true;
             clickVFX.SetActive(true);
             visual.localScale = Vector3.one * 1.2f;
@@ -94,6 +106,8 @@ public class CellControl : MonoBehaviour
         }
         else if(!isCl && isClicked)
         {
+            visual.DOKill();
+
             isClicked = false;
             clickVFX.SetActive(false);            
             RotatorControl.Instance.Remove(visual);
@@ -115,6 +129,9 @@ public class CellControl : MonoBehaviour
     }
     private IEnumerator playDestroy(bool isCountable)
     {
+        if (isDestroing) yield break;
+
+        isDestroing = true;
         smallBlowVFX.SetActive(true);
 
         if (Globals.Cells[new Vector2(transform.position.x, transform.position.y)].Equals(this))
@@ -128,8 +145,11 @@ public class CellControl : MonoBehaviour
 
         if (isCountable)
         {
+            visual.DOKill();
             visual.localScale = Vector3.one;
-            
+
+            yield return new WaitForSeconds(Time.deltaTime);
+
             float distKoeff = (visual.position - new Vector3(0, 7, -1)).magnitude / 7f;
             visual.DOMove(new Vector3(0, 7, -1), flyToMenuTime * distKoeff).SetEase(Ease.Linear);
             float timer = (flyToMenuTime * distKoeff) > smallBlowVFXTime ? (flyToMenuTime * distKoeff) : smallBlowVFXTime;
@@ -145,8 +165,8 @@ public class CellControl : MonoBehaviour
     }
     private void releaseGameobjects()
     {
-        assets.ReturnFruitByType(CellType, apprearance);
-        assets.ReturnCell(this.gameObject);
+        assets.ReturnFruitByType(CellType, CellAction, apprearance);
+        assets.ReturnCell(gameObject);
     }
 }
 

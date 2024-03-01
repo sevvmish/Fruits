@@ -17,6 +17,8 @@ public class InputControl : MonoBehaviour
     private GameManager gm;
     private GameObject lastPlaceForAudioListener;
     private float _cooldown;
+    private float _awaiter;
+    private float awaiterCooldown = 5;
     private Vector3 prevPos;
 
     private CellTypes lastCellType;
@@ -34,10 +36,16 @@ public class InputControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {        
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            fieldManager.FindCombination();
+        }
+
         if (!gm.IsGameStarted) return;
         if (_cooldown > 0) _cooldown -= Time.deltaTime;
 
-        
+        showHelp();
+
         if (Input.GetMouseButton(0) && _cooldown <= 0)
         {
             ray = _camera.ScreenPointToRay(Input.mousePosition);
@@ -62,11 +70,10 @@ public class InputControl : MonoBehaviour
                     {
                         removePreviousCell(lastCell);
                     }
-                    
-                    //print(cell.gameObject.name);
-                    
+
+                    _awaiter = 0;
+                    awaiterCooldown = 5;
                 }                
-                //_cooldown = Time.deltaTime;
             }
             else
             {
@@ -75,6 +82,9 @@ public class InputControl : MonoBehaviour
                     //touchLine.Add(Input.mousePosition);
                 }
             }
+
+            //==
+            
         }
         else if (!Input.GetMouseButton(0))
         {
@@ -85,10 +95,31 @@ public class InputControl : MonoBehaviour
             }
             else if(outlinedCells.Count >= 1)
             {
-                SoundUI.Instance.PlayUISound(SoundsUI.error, 0.2f);
+                SoundUI.Instance.PlayUISound(SoundsUI.pop, 0.1f);
                 resetCells();
             }
+
             
+        }
+    }
+
+    private void showHelp()
+    {
+        _awaiter += Time.deltaTime;
+
+        if (_awaiter > awaiterCooldown)
+        {
+            awaiterCooldown = 2;
+            _awaiter = 0;
+            List<CellControl> cellsForHelp = fieldManager.FindCombination();
+
+            if (cellsForHelp.Count > 0)
+            {
+                for (int i = 0; i < cellsForHelp.Count; i++)
+                {
+                    cellsForHelp[i].MakeOneTimeShakeScale(0.5f, 0.9f);
+                }
+            }
         }
     }
 
