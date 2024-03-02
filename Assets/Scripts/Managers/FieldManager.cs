@@ -150,13 +150,7 @@ public class FieldManager : MonoBehaviour
             cells.Add(Globals.Cells[new Vector2(cell.transform.position.x - 1, cell.transform.position.y + 1)]);
         }
 
-        print(" - ====================");
-        for (int i = 0; i < cells.Count; i++)
-        {
-            print(i + ": " + cells[i].transform.position);
-        }
-        print("+ - ======================");
-
+       
         UndoCells(cells.ToArray());
     }
 
