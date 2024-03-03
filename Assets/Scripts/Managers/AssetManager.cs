@@ -127,6 +127,8 @@ public class AssetManager : MonoBehaviour
 
     public void ReturnFruitByType(CellTypes _type, CellActions _action, GameObject g)
     {
+        g.transform.parent = transform;
+
         switch (_action)
         {
             case CellActions.simple:

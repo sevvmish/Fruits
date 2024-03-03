@@ -16,7 +16,7 @@ public class FieldManager : MonoBehaviour
     private HashSet<Vector2> cellsToPlay = new HashSet<Vector2>();
     private List<Vector2> respawnCells = new List<Vector2>();
 
-    private readonly float cellSpeed = 0.2f;
+    private readonly float cellSpeed = 0.12f;
 
     
 

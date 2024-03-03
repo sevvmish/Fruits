@@ -56,7 +56,8 @@ public class LevelManager : MonoBehaviour
         return new CellTypes[] {
             CellTypes.fruit1,
             CellTypes.fruit2,
-            CellTypes.fruit3
+            CellTypes.fruit3,
+            CellTypes.fruit5,
         };
     }
 
