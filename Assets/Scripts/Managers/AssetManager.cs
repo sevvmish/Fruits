@@ -21,6 +21,13 @@ public class AssetManager : MonoBehaviour
     [SerializeField] private GameObject smallBombFruit5;
     [SerializeField] private GameObject smallBombFruit6;
 
+    [SerializeField] private GameObject lineBombFruit1;
+    [SerializeField] private GameObject lineBombFruit2;
+    [SerializeField] private GameObject lineBombFruit3;
+    [SerializeField] private GameObject lineBombFruit4;
+    [SerializeField] private GameObject lineBombFruit5;
+    [SerializeField] private GameObject lineBombFruit6;
+
     private ObjectPool cellPool;
     
     private ObjectPool fruit1Pool;
@@ -36,6 +43,13 @@ public class AssetManager : MonoBehaviour
     private ObjectPool smallBombFruit4Pool;
     private ObjectPool smallBombFruit5Pool;
     private ObjectPool smallBombFruit6Pool;
+
+    private ObjectPool lineBombFruit1Pool;
+    private ObjectPool lineBombFruit2Pool;
+    private ObjectPool lineBombFruit3Pool;
+    private ObjectPool lineBombFruit4Pool;
+    private ObjectPool lineBombFruit5Pool;
+    private ObjectPool lineBombFruit6Pool;
 
     // Start is called before the first frame update
     public void SetData()
@@ -55,6 +69,13 @@ public class AssetManager : MonoBehaviour
         smallBombFruit4Pool = new ObjectPool(Globals.POOL_LIMIT / 2, smallBombFruit4, transform);
         smallBombFruit5Pool = new ObjectPool(Globals.POOL_LIMIT / 2, smallBombFruit5, transform);
         smallBombFruit6Pool = new ObjectPool(Globals.POOL_LIMIT / 2, smallBombFruit6, transform);
+
+        lineBombFruit1Pool = new ObjectPool(Globals.POOL_LIMIT / 2, lineBombFruit1, transform);
+        lineBombFruit2Pool = new ObjectPool(Globals.POOL_LIMIT / 2, lineBombFruit2, transform);
+        lineBombFruit3Pool = new ObjectPool(Globals.POOL_LIMIT / 2, lineBombFruit3, transform);
+        lineBombFruit4Pool = new ObjectPool(Globals.POOL_LIMIT / 2, lineBombFruit4, transform);
+        lineBombFruit5Pool = new ObjectPool(Globals.POOL_LIMIT / 2, lineBombFruit5, transform);
+        lineBombFruit6Pool = new ObjectPool(Globals.POOL_LIMIT / 2, lineBombFruit6, transform);
     }
 
     public CellControl GetCell()
@@ -92,6 +113,52 @@ public class AssetManager : MonoBehaviour
 
                     case CellTypes.fruit6:
                         return fruit6Pool.GetObject();
+                }
+                break;
+
+            case CellActions.line_explosion_vertical:
+                switch (_type)
+                {
+                    case CellTypes.fruit1:
+                        return lineBombFruit1Pool.GetObject();
+
+                    case CellTypes.fruit2:
+                        return lineBombFruit2Pool.GetObject();
+
+                    case CellTypes.fruit3:
+                        return lineBombFruit3Pool.GetObject();
+
+                    case CellTypes.fruit4:
+                        return lineBombFruit4Pool.GetObject();
+
+                    case CellTypes.fruit5:
+                        return lineBombFruit5Pool.GetObject();
+
+                    case CellTypes.fruit6:
+                        return lineBombFruit6Pool.GetObject();
+                }
+                break;
+
+            case CellActions.line_explosion_horizontal:
+                switch (_type)
+                {
+                    case CellTypes.fruit1:
+                        return lineBombFruit1Pool.GetObject();
+
+                    case CellTypes.fruit2:
+                        return lineBombFruit2Pool.GetObject();
+
+                    case CellTypes.fruit3:
+                        return lineBombFruit3Pool.GetObject();
+
+                    case CellTypes.fruit4:
+                        return lineBombFruit4Pool.GetObject();
+
+                    case CellTypes.fruit5:
+                        return lineBombFruit5Pool.GetObject();
+
+                    case CellTypes.fruit6:
+                        return lineBombFruit6Pool.GetObject();
                 }
                 break;
 
@@ -156,6 +223,64 @@ public class AssetManager : MonoBehaviour
 
                     case CellTypes.fruit6:
                         fruit6Pool.ReturnObject(g);
+                        break;
+                }
+                break;
+
+            case CellActions.line_explosion_vertical:
+                switch (_type)
+                {
+                    case CellTypes.fruit1:
+                        lineBombFruit1Pool.ReturnObject(g);
+                        break;
+
+                    case CellTypes.fruit2:
+                        lineBombFruit2Pool.ReturnObject(g);
+                        break;
+
+                    case CellTypes.fruit3:
+                        lineBombFruit3Pool.ReturnObject(g);
+                        break;
+
+                    case CellTypes.fruit4:
+                        lineBombFruit4Pool.ReturnObject(g);
+                        break;
+
+                    case CellTypes.fruit5:
+                        lineBombFruit5Pool.ReturnObject(g);
+                        break;
+
+                    case CellTypes.fruit6:
+                        lineBombFruit6Pool.ReturnObject(g);
+                        break;
+                }
+                break;
+
+            case CellActions.line_explosion_horizontal:
+                switch (_type)
+                {
+                    case CellTypes.fruit1:
+                        lineBombFruit1Pool.ReturnObject(g);
+                        break;
+
+                    case CellTypes.fruit2:
+                        lineBombFruit2Pool.ReturnObject(g);
+                        break;
+
+                    case CellTypes.fruit3:
+                        lineBombFruit3Pool.ReturnObject(g);
+                        break;
+
+                    case CellTypes.fruit4:
+                        lineBombFruit4Pool.ReturnObject(g);
+                        break;
+
+                    case CellTypes.fruit5:
+                        lineBombFruit5Pool.ReturnObject(g);
+                        break;
+
+                    case CellTypes.fruit6:
+                        lineBombFruit6Pool.ReturnObject(g);
                         break;
                 }
                 break;

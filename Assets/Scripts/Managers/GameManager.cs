@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     public FieldManager GetFieldManager => fieldManager;
     public LevelManager LevelManager => levelManager;
     public Dictionary<CellTypes, int> CurrentProgress { get; private set; }
+    public int CurrentTurns { get; private set; }
 
     //GAME START    
     public bool IsGameStarted { get; private set; }
@@ -90,6 +91,7 @@ public class GameManager : MonoBehaviour
         {
             CurrentProgress.Add(item, 0);
         }
+        CurrentTurns = Globals.OverallTurns;
 
         IsGameStarted = true;
 
@@ -118,7 +120,6 @@ public class GameManager : MonoBehaviour
             }
         });
 
-        ScreenSaver.Instance.ShowScreen();
     }
 
     public bool CountCell(CellControl cell)

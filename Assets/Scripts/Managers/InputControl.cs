@@ -36,11 +36,7 @@ public class InputControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {        
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            fieldManager.FindCombination();
-        }
-
+        
         if (!gm.IsGameStarted) return;
         if (_cooldown > 0) _cooldown -= Time.deltaTime;
 
@@ -73,7 +69,12 @@ public class InputControl : MonoBehaviour
 
                     _awaiter = 0;
                     awaiterCooldown = 5;
-                }                
+                }      
+                
+                if (outlinedCells.Count > 0)
+                {
+                    gm.GetUI().SetObjectAmount(outlinedCells.Count);
+                }
             }
             else
             {
@@ -99,7 +100,7 @@ public class InputControl : MonoBehaviour
                 resetCells();
             }
 
-            
+            gm.GetUI().SetObjectAmount(outlinedCells.Count);
         }
     }
 

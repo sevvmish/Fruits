@@ -22,17 +22,22 @@ public class LevelManager : MonoBehaviour
         {
             case 0:
                 Globals.FieldDimention = new Vector2(7, 10);
+
+                Globals.OverallTurns = 99;
+
                 Globals.VictoryCondition = new Dictionary<CellTypes, int>
                 {
                     {CellTypes.fruit1, 10 },
                     {CellTypes.fruit2, 10 }
                 };
-                ApprovedFruitTypeCells = approvedSimpleCellsAll();
+                ApprovedFruitTypeCells = approvedSimpleCellsThree1();
 
                 ApprovedCellActions = new Dictionary<CellActions, int> 
                 {
-                    {CellActions.simple, 90 },
-                    {CellActions.small_explosion, 10 }
+                    {CellActions.simple, 89 },
+                    {CellActions.small_explosion, 5 },
+                    {CellActions.line_explosion_horizontal, 3 },
+                    {CellActions.line_explosion_vertical, 3 },
                 };
 
                 break;

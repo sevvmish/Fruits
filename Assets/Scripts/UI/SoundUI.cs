@@ -6,6 +6,7 @@ public class SoundUI : MonoBehaviour
 {
     public static SoundUI Instance { get; private set; }
     private AudioSource _audio;
+    private int priority;
 
     [SerializeField] private AudioClip ErrorClip;
     [SerializeField] private AudioClip Win;
@@ -42,7 +43,29 @@ public class SoundUI : MonoBehaviour
 
     public void PlayUISound(SoundsUI _type)
     {
-        PlayUISound(_type, 1f);
+        PlayUISound(_type, 1f);                
+    }
+
+    private void Update()
+    {
+        if (priority > 0 && !_audio.isPlaying)
+        {
+            priority = 0;
+        }
+    }
+
+    public AudioClip GetAudioClip(SoundsUI _type)
+    {
+        switch(_type)
+        {
+            case SoundsUI.fruit_blow:
+                return FruitBlow;
+
+            case SoundsUI.berry_blow:
+                return BerryBlow;
+        }
+
+        return null;
     }
 
     public void PlayUISound(SoundsUI _type, float volume)
@@ -53,48 +76,56 @@ public class SoundUI : MonoBehaviour
         switch (_type)
         {
             case SoundsUI.tick:
+                if (priority > 0) break;
                 _audio.Stop();
                 _audio.clip = Tick;
                 _audio.Play();
                 break;
 
             case SoundsUI.error:
+                if (priority > 0) break;
                 _audio.Stop();
                 _audio.clip = ErrorClip;
                 _audio.Play();
                 break;
 
             case SoundsUI.pop:
+                if (priority > 0) break;
                 _audio.Stop();
                 _audio.clip = Pop;
                 _audio.Play();
                 break;
 
             case SoundsUI.click:
+                if (priority > 0) break;
                 _audio.Stop();
                 _audio.clip = Click;
                 _audio.Play();
                 break;
 
             case SoundsUI.positive:
+                if (priority > 0) break;
                 _audio.Stop();
                 _audio.clip = positiveSoundClip;
                 _audio.Play();
                 break;
 
             case SoundsUI.win:
+                priority = 2;
                 _audio.Stop();
                 _audio.clip = Win;
                 _audio.Play();
                 break;
 
             case SoundsUI.lose:
+                priority = 2;
                 _audio.Stop();
                 _audio.clip = Lose;
                 _audio.Play();
                 break;
 
             case SoundsUI.beep_tick:
+                if (priority > 0) break;
                 _audio.Stop();   
                 _audio.pitch = 1.5f;
                 _audio.clip = BeepTick;
@@ -102,6 +133,7 @@ public class SoundUI : MonoBehaviour
                 break;
 
             case SoundsUI.beep_out:
+                if (priority > 0) break;
                 _audio.Stop();
                 _audio.pitch = 0.8f;
                 _audio.clip = BeepOut;
@@ -109,6 +141,7 @@ public class SoundUI : MonoBehaviour
                 break;
 
             case SoundsUI.success:
+                priority = 2;
                 _audio.Stop();
                 _audio.pitch = 1f;
                 _audio.clip = Success;
@@ -116,6 +149,7 @@ public class SoundUI : MonoBehaviour
                 break;
 
             case SoundsUI.success2:
+                priority = 2;
                 _audio.Stop();
                 _audio.pitch = 1f;
                 _audio.clip = Success2;
@@ -123,6 +157,7 @@ public class SoundUI : MonoBehaviour
                 break;
 
             case SoundsUI.success3:
+                priority = 2;
                 _audio.Stop();
                 _audio.pitch = 1f;
                 _audio.clip = Success3;
@@ -130,6 +165,7 @@ public class SoundUI : MonoBehaviour
                 break;
 
             case SoundsUI.cash:
+                if (priority > 0) break;
                 _audio.Stop();
                 _audio.pitch = 1f;
                 _audio.clip = Cash;
@@ -137,6 +173,8 @@ public class SoundUI : MonoBehaviour
                 break;
 
             case SoundsUI.blow_cells:
+                if (priority > 1) break;
+                priority = 1;
                 _audio.Stop();
                 _audio.pitch = 1f;
                 _audio.clip = BlowCells;
@@ -144,6 +182,7 @@ public class SoundUI : MonoBehaviour
                 break;
 
             case SoundsUI.fruit_blow:
+                if (priority > 0) break;
                 _audio.Stop();
                 _audio.pitch = 1f;
                 _audio.clip = FruitBlow;
@@ -151,6 +190,7 @@ public class SoundUI : MonoBehaviour
                 break;
 
             case SoundsUI.berry_blow:
+                if (priority > 0) break;
                 _audio.Stop();
                 _audio.pitch = 1f;
                 _audio.clip = BerryBlow;
@@ -158,6 +198,8 @@ public class SoundUI : MonoBehaviour
                 break;
 
             case SoundsUI.small_blow:
+                if (priority > 1) break;
+                priority = 1;
                 _audio.Stop();
                 _audio.pitch = 1f;
                 _audio.clip = SmallBlow;

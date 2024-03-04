@@ -11,6 +11,7 @@ public class CellControl : MonoBehaviour
 
     [SerializeField] private Transform visual;
     [SerializeField] private GameObject clickVFX;
+    [SerializeField] private GameObject cellBlowVFX;
     [SerializeField] private GameObject smallBlowVFX;
 
     private readonly float smallBlowVFXTime = Globals.SMALL_BLOW_TIME;
@@ -19,8 +20,8 @@ public class CellControl : MonoBehaviour
     private AssetManager assets;
     private GameObject apprearance;
     private bool isClicked;
-    private static int[] cellsForResults = new int[] { 1, 2, 3, 4, 5, 6 };
-    private static int[] cellsForAction = new int[] { 0 };
+
+    private float _timer, timerCooldown;
 
     private bool isDestroing;
 
@@ -41,6 +42,13 @@ public class CellControl : MonoBehaviour
         apprearance.transform.localEulerAngles = Vector3.zero;
         apprearance.transform.localScale = Vector3.one;
         apprearance.SetActive(true);
+
+        if (CellAction == CellActions.line_explosion_horizontal)
+        {
+            apprearance.transform.localEulerAngles = new Vector3(0, 0, 90);
+        }
+
+        
 
         Color color = Color.white;
 
@@ -71,24 +79,65 @@ public class CellControl : MonoBehaviour
                 break;
         }
 
+        cellBlowVFX.GetComponent<ParticleSystem>().startColor = color;
         smallBlowVFX.GetComponent<ParticleSystem>().startColor = color;
         clickVFX.GetComponent<ParticleSystem>().startColor = color;
+
+        timerCooldown = UnityEngine.Random.Range(2f, 5f);
     }
 
-    public static bool IsCellForResult(CellTypes _type)
+    private void Start()
     {
-        return cellsForResults.Contains((int)_type);
+        if (CellAction == CellActions.simple)
+        {
+            if (CellType == CellTypes.fruit1 || CellType == CellTypes.fruit2 || CellType == CellTypes.fruit4)
+            {
+                cellBlowVFX.GetComponent<AudioSource>().clip = SoundUI.Instance.GetAudioClip(SoundsUI.fruit_blow);
+            }
+            else
+            {
+                cellBlowVFX.GetComponent<AudioSource>().clip = SoundUI.Instance.GetAudioClip(SoundsUI.berry_blow);
+            }
+        }
     }
 
-    public static bool IsCellForAction(CellTypes _type)
+    private void Update()
     {
-        return cellsForAction.Contains((int)_type);
+        if (!isClicked && (CellAction == CellActions.line_explosion_vertical || CellAction == CellActions.line_explosion_horizontal))
+        {
+            if (_timer > timerCooldown)
+            {
+                _timer = 0;
+                timerCooldown = UnityEngine.Random.Range(2f, 5f);
+
+                switch (CellAction)
+                {
+                    case CellActions.line_explosion_vertical:
+                        visual.DOKill();
+                        //visual.DOPunchScale(new Vector3(0,1,0), 0.15f).SetEase(Ease.InOutSine);
+                        visual.DOPunchPosition(new Vector3(0, UnityEngine.Random.Range(-0.15f, 0.15f), 0), 0.2f, 20).SetEase(Ease.Linear);
+                        break;
+
+                    case CellActions.line_explosion_horizontal:
+                        visual.DOKill();
+                        //visual.DOPunchScale(new Vector3(1, 0, 0), 0.15f).SetEase(Ease.InOutSine);
+                        visual.DOPunchPosition(new Vector3(UnityEngine.Random.Range(-0.15f, 0.15f), 0, 0), 0.2f, 20).SetEase(Ease.Linear);
+                        break;
+                }
+            }
+            else
+            {
+                _timer += Time.deltaTime;
+            }
+            
+        }
     }
 
     public void MakeOneTimeShakeScale(float _time, float _power, int vibrato)
     {
         if (isClicked) return;
 
+        visual.DOKill();
         visual.DOShakeScale(_time, _power, vibrato).SetEase(Ease.Linear).OnComplete(()=> { visual.localScale = Vector3.one;});
     }
     
@@ -120,6 +169,7 @@ public class CellControl : MonoBehaviour
     {
         CLickedEffect(false);
         clickVFX.SetActive(false);
+        cellBlowVFX.SetActive(false);
         smallBlowVFX.SetActive(false);
     }
 
@@ -132,16 +182,30 @@ public class CellControl : MonoBehaviour
         if (isDestroing) yield break;
 
         isDestroing = true;
-        smallBlowVFX.SetActive(true);
 
-        if (Globals.Cells[new Vector2(transform.position.x, transform.position.y)].Equals(this))
+        switch(CellAction)
+        {
+            case CellActions.simple:
+                cellBlowVFX.SetActive(true);
+                break;
+
+            case CellActions.small_explosion:
+                smallBlowVFX.SetActive(true);
+                break;
+        }
+
+        
+
+        if (!Globals.Cells.ContainsKey(new Vector2(transform.position.x, transform.position.y)))
+        {
+            Debug.LogError("trying to remove cell which not exists");
+            yield break;
+        }
+        else if (Globals.Cells[new Vector2(transform.position.x, transform.position.y)].Equals(this))
         {
             Globals.Cells.Remove(new Vector2(transform.position.x, transform.position.y));
         }
-        else
-        {
-            Debug.LogError("trying to remove cell which not exists");
-        }
+        
 
         if (isCountable)
         {
@@ -154,16 +218,18 @@ public class CellControl : MonoBehaviour
             visual.DOMove(new Vector3(0, 7, -1), flyToMenuTime * distKoeff).SetEase(Ease.Linear);
             float timer = (flyToMenuTime * distKoeff) > smallBlowVFXTime ? (flyToMenuTime * distKoeff) : smallBlowVFXTime;
             yield return new WaitForSeconds(timer);
-            releaseGameobjects();
+            assets.ReturnFruitByType(CellType, CellAction, apprearance);
+            assets.ReturnCell(gameObject);
         }
         else
         {
             apprearance.SetActive(false);
-            yield return new WaitForSeconds(smallBlowVFXTime);
-            releaseGameobjects();
+            assets.ReturnFruitByType(CellType, CellAction, apprearance);
+            yield return new WaitForSeconds(smallBlowVFXTime);            
+            assets.ReturnCell(gameObject);
         }        
     }
-    private void releaseGameobjects()
+    public void ReleaseAllGameobjects()
     {
         assets.ReturnFruitByType(CellType, CellAction, apprearance);
         assets.ReturnCell(gameObject);
@@ -184,5 +250,7 @@ public enum CellTypes
 public enum CellActions
 {
     simple,
-    small_explosion
+    small_explosion,
+    line_explosion_vertical,
+    line_explosion_horizontal
 }
