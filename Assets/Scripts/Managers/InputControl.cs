@@ -117,7 +117,7 @@ public class InputControl : MonoBehaviour
             {
                 for (int i = 0; i < cellsForHelp.Count; i++)
                 {
-                    cellsForHelp[i].MakeOneTimeShakeScale(0.5f, 0.9f);
+                    cellsForHelp[i].MakeOneTimeShakeScale(0.5f, 0.9f, 20);
                 }
             }
         }

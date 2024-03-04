@@ -29,10 +29,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4820404636164651628}
+  - {fileID: 2720208278196536159}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &7898336248378797524
+--- !u!1 &8226011472783415275
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,46 +40,46 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4820404636164651628}
-  - component: {fileID: 1558127089858166847}
-  - component: {fileID: 6323147524846238626}
+  - component: {fileID: 2720208278196536159}
+  - component: {fileID: 9163222120706025913}
+  - component: {fileID: 7724279567543787733}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: fruit4smallbomb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4820404636164651628
+--- !u!4 &2720208278196536159
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7898336248378797524}
+  m_GameObject: {fileID: 8226011472783415275}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.9, y: 0.9, z: 0.9}
-  m_ConstrainProportionsScale: 1
+  m_LocalRotation: {x: 0.022557573, y: -0.084186025, z: -0.25783414, w: 0.9622502}
+  m_LocalPosition: {x: -0.009088989, y: -0.043983474, z: 0.011999439}
+  m_LocalScale: {x: 0.79999995, y: 0.79999995, z: 0.7}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6215735094196547754}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &1558127089858166847
+  m_LocalEulerAnglesHint: {x: 0, y: -10, z: -30}
+--- !u!33 &9163222120706025913
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7898336248378797524}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &6323147524846238626
+  m_GameObject: {fileID: 8226011472783415275}
+  m_Mesh: {fileID: -8863783127073354932, guid: 7b2fde3bbaf4ae34a82a7f44f67fa965, type: 3}
+--- !u!23 &7724279567543787733
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7898336248378797524}
+  m_GameObject: {fileID: 8226011472783415275}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -93,7 +93,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e5bcbc0621375684895a103978e8278f, type: 2}
+  - {fileID: 2100000, guid: 0b0edaa7cb900df43a673b9b3a6629a5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -27,7 +27,7 @@ public class LevelManager : MonoBehaviour
                     {CellTypes.fruit1, 10 },
                     {CellTypes.fruit2, 10 }
                 };
-                ApprovedFruitTypeCells = approvedSimpleCellsThree1();
+                ApprovedFruitTypeCells = approvedSimpleCellsAll();
 
                 ApprovedCellActions = new Dictionary<CellActions, int> 
                 {

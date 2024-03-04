@@ -85,11 +85,11 @@ public class CellControl : MonoBehaviour
         return cellsForAction.Contains((int)_type);
     }
 
-    public void MakeOneTimeShakeScale(float _time, float _power)
+    public void MakeOneTimeShakeScale(float _time, float _power, int vibrato)
     {
         if (isClicked) return;
 
-        visual.DOShakeScale(_time, _power, 30).SetEase(Ease.Linear).OnComplete(()=> { visual.localScale = Vector3.one;});
+        visual.DOShakeScale(_time, _power, vibrato).SetEase(Ease.Linear).OnComplete(()=> { visual.localScale = Vector3.one;});
     }
     
     public void CLickedEffect(bool isCl)

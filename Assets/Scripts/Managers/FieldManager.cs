@@ -251,9 +251,9 @@ public class FieldManager : MonoBehaviour
     {
         cell.transform.DOMove(pos, cellSpeed).SetEase(Ease.Linear);
 
-        yield return new WaitForSeconds(cellSpeed);
+        yield return new WaitForSeconds(cellSpeed + Time.deltaTime);
 
-        cell.MakeOneTimeShakeScale(0.2f, 0.7f);
+        cell.MakeOneTimeShakeScale(0.15f, 0.5f, 30);
 
     }
 
